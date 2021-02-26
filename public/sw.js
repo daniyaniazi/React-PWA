@@ -21,16 +21,19 @@ this.addEventListener('install', (event) => {
 
 //FETCH ALL IN OFFLINE MODE
 this.addEventListener('fetch', (event) => {
-    //PUSH NOTIFICATION WHEN URL IS BELOW MENTIONED ONE
-    if (event.request.url === 'http://localhost:3000/manifest.json') {
-        event.waitUntil(
-            this.registration.showNotification("Hello Title", {
-                body: "NotificationBody"
-            })
-        )
-    }
 
     if (!navigator.onLine) {
+
+        //PUSH NOTIFICATION WHEN URL IS BELOW MENTIONED ONE
+        if (event.request.url === 'http://localhost:3000/manifest.json') {
+            event.waitUntil(
+                this.registration.showNotification("You Are Offline", {
+                    body: "Make sure that you internet connection is stable to get the latest updates and feature. Thankyou!"
+                })
+            )
+        }
+
+
         event.respondWith(
             caches.match(event.request).then((response) => {
                 if (response) {
