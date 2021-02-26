@@ -21,7 +21,14 @@ this.addEventListener('install', (event) => {
 
 //FETCH ALL IN OFFLINE MODE
 this.addEventListener('fetch', (event) => {
-
+    //PUSH NOTIFICATION WHEN URL IS BELOW MENTIONED ONE
+    if (event.request.url === 'http://localhost:3000/manifest.json') {
+        event.waitUntil(
+            this.registration.showNotification("Hello Title", {
+                body: "NotificationBody"
+            })
+        )
+    }
 
     if (!navigator.onLine) {
         event.respondWith(
