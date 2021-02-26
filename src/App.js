@@ -1,13 +1,22 @@
-
+import { useEffect } from "react";
 import './App.css';
 import { Navbar, Nav } from "react-bootstrap";
 import { Link, Route, BrowserRouter, Switch } from "react-router-dom";
+import firebase from "./services/firbaseService";
 //COMPONETS
 import About from "./components/about";
 import Home from "./components/home";
 import Users from "./components/users";
 
 function App() {
+  useEffect(() => {
+    const message = firebase.messaging();
+    message.requestPermission().then(() => {
+      return message.getToken()
+    }).then((data) => {
+      console.warn("TOKEN:", data)
+    })
+  }, []);
   return (
     <div className="App">
       <BrowserRouter>
